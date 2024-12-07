@@ -1,45 +1,39 @@
-import { Tabs } from 'expo-router';
 import React from 'react';
-import { Platform } from 'react-native';
+import { createDrawerNavigator } from '@react-navigation/drawer';
 
-import { HapticTab } from '@/components/HapticTab';
-import { IconSymbol } from '@/components/ui/IconSymbol';
-import TabBarBackground from '@/components/ui/TabBarBackground';
-import { Colors } from '@/constants/Colors';
-import { useColorScheme } from '@/hooks/useColorScheme';
+// Importa tus pantallas
+import HomeScreen from '../screens/Home/HomeScreen';
+import ExploreScreen from '../screens/Explore/ExploreScreen'; // Asegúrate de que existe esta pantalla
 
-export default function TabLayout() {
-  const colorScheme = useColorScheme();
+// Crear el Drawer Navigator
+const Drawer = createDrawerNavigator();
 
+export default function DrawerLayout() {
   return (
-    <Tabs
-      screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
-        headerShown: false,
-        tabBarButton: HapticTab,
-        tabBarBackground: TabBarBackground,
-        tabBarStyle: Platform.select({
-          ios: {
-            // Use a transparent background on iOS to show the blur effect
-            position: 'absolute',
+      <Drawer.Navigator
+        initialRouteName="Home"
+        screenOptions={{
+          drawerStyle: {
+            backgroundColor: '#f8f8f8', // Fondo del sidebar
+            width: 240, // Ancho del sidebar
           },
-          default: {},
-        }),
-      }}>
-      <Tabs.Screen
-        name="index"
-        options={{
-          title: 'Home',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="house.fill" color={color} />,
+          headerShown: true, // Mostrar encabezado en las pantallas
         }}
-      />
-      <Tabs.Screen
-        name="explore"
-        options={{
-          title: 'Explore',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="paperplane.fill" color={color} />,
-        }}
-      />
-    </Tabs>
+      >
+        <Drawer.Screen
+          name="Home"
+          component={HomeScreen}
+          options={{
+            title: 'Página de Inicio',
+          }}
+        />
+        <Drawer.Screen
+          name="Explore"
+          component={ExploreScreen}
+          options={{
+            title: 'Explorar',
+          }}
+        />
+      </Drawer.Navigator>
   );
 }
