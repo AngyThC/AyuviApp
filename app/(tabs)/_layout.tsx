@@ -1,39 +1,67 @@
 import React from 'react';
 import { createDrawerNavigator } from '@react-navigation/drawer';
-
-// Importa tus pantallas
+import { Text, StyleSheet, TouchableOpacity, View } from 'react-native';
 import HomeScreen from '../screens/Home/HomeScreen';
-import ExploreScreen from '../screens/Explore/ExploreScreen'; // Asegúrate de que existe esta pantalla
+import ExploreScreen from '../screens/Explore/ExploreScreen';
 
-// Crear el Drawer Navigator
 const Drawer = createDrawerNavigator();
 
-export default function DrawerLayout() {
+function CustomDrawerContent({ navigation }) {
   return (
-      <Drawer.Navigator
-        initialRouteName="Home"
-        screenOptions={{
-          drawerStyle: {
-            backgroundColor: '#f8f8f8', // Fondo del sidebar
-            width: 240, // Ancho del sidebar
-          },
-          headerShown: true, // Mostrar encabezado en las pantallas
+    <View style={styles.drawerContent}>
+      <TouchableOpacity
+        style={styles.drawerItem}
+        onPress={() => {
+          navigation.navigate('Home');
+          navigation.closeDrawer(); // Cierra el drawer automáticamente
         }}
       >
-        <Drawer.Screen
-          name="Home"
-          component={HomeScreen}
-          options={{
-            title: 'Página de Inicio',
-          }}
-        />
-        <Drawer.Screen
-          name="Explore"
-          component={ExploreScreen}
-          options={{
-            title: 'Explorar',
-          }}
-        />
-      </Drawer.Navigator>
+        <Text style={styles.drawerText}>Página de Inicio</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={styles.drawerItem}
+        onPress={() => {
+          navigation.navigate('Explore');
+          navigation.closeDrawer(); // Cierra el drawer automáticamente
+        }}
+      >
+        <Text style={styles.drawerText}>Explorar</Text>
+      </TouchableOpacity>
+    </View>
   );
 }
+
+export default function Layout() {
+  return (
+    <Drawer.Navigator
+      initialRouteName="Home"
+      drawerContent={(props) => <CustomDrawerContent {...props} />}
+    >
+      <Drawer.Screen name="Home" component={HomeScreen} />
+      <Drawer.Screen name="Explore" component={ExploreScreen} />
+    </Drawer.Navigator>
+  );
+}
+
+const styles = StyleSheet.create({
+  drawerContent: {
+    flex: 1,
+    justifyContent: 'flex-start', // Centra los botones verticalmente
+    paddingVertical: 50,
+    paddingHorizontal: 10,
+    backgroundColor: '#282828', // Fondo oscuro
+  },
+  drawerItem: {
+    backgroundColor: '#ffffff', // Botón blanco
+    paddingVertical: 15,
+    paddingHorizontal: 20,
+    borderRadius: 8,
+    marginBottom: 15, // Separación entre botones
+    elevation: 5, // Sombra para un diseño moderno
+  },
+  drawerText: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#000000', // Texto negro
+  },
+});
