@@ -1,12 +1,12 @@
 import React from 'react';
-import { createDrawerNavigator } from '@react-navigation/drawer';
+import { createDrawerNavigator, DrawerContentComponentProps } from '@react-navigation/drawer';
 import { Text, StyleSheet, TouchableOpacity, View } from 'react-native';
 import HomeScreen from '../screens/Home/HomeScreen';
 import ExploreScreen from '../screens/Explore/ExploreScreen';
 
 const Drawer = createDrawerNavigator();
 
-function CustomDrawerContent({ navigation }) {
+function CustomDrawerContent({ navigation }: DrawerContentComponentProps) {
   return (
     <View style={styles.drawerContent}>
       <TouchableOpacity
@@ -46,22 +46,22 @@ export default function Layout() {
 const styles = StyleSheet.create({
   drawerContent: {
     flex: 1,
-    justifyContent: 'flex-start', // Centra los botones verticalmente
+    justifyContent: 'flex-start', 
     paddingVertical: 50,
     paddingHorizontal: 10,
-    backgroundColor: '#282828', // Fondo oscuro
+    backgroundColor: '#282828', 
   },
   drawerItem: {
-    backgroundColor: '#ffffff', // Botón blanco
+    backgroundColor: '#ffffff',
     paddingVertical: 15,
     paddingHorizontal: 20,
     borderRadius: 8,
-    marginBottom: 15, // Separación entre botones
-    elevation: 5, // Sombra para un diseño moderno
+    marginBottom: 15, 
+    elevation: 5, 
   },
   drawerText: {
     fontSize: 16,
     fontWeight: 'bold',
-    color: '#000000', // Texto negro
+    color: '#000000', 
   },
 });
