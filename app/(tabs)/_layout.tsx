@@ -9,11 +9,11 @@ const Drawer = createDrawerNavigator();
 function CustomDrawerContent({ navigation }: DrawerContentComponentProps) {
   return (
     <View style={styles.drawerContent}>
-      <TouchableOpacity
+    <TouchableOpacity
         style={styles.drawerItem}
         onPress={() => {
-          navigation.navigate('Home');
-          navigation.closeDrawer(); // Cierra el drawer automáticamente
+          navigation.closeDrawer(); // Cierra el drawer primero
+          setTimeout(() => navigation.navigate('Home'), 50); // Navega después
         }}
       >
         <Text style={styles.drawerText}>Página de Inicio</Text>
@@ -21,12 +21,13 @@ function CustomDrawerContent({ navigation }: DrawerContentComponentProps) {
       <TouchableOpacity
         style={styles.drawerItem}
         onPress={() => {
-          navigation.navigate('Explore');
-          navigation.closeDrawer(); // Cierra el drawer automáticamente
+          navigation.closeDrawer(); // Cierra el drawer primero
+          setTimeout(() => navigation.navigate('Explore'), 50); // Navega después
         }}
       >
         <Text style={styles.drawerText}>Explorar</Text>
       </TouchableOpacity>
+
     </View>
   );
 }
