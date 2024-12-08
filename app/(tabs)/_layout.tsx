@@ -14,7 +14,7 @@ function CustomDrawerContent({ navigation }: DrawerContentComponentProps) {
         style={styles.drawerItem}
         onPress={() => {
           navigation.closeDrawer(); // Cierra el drawer primero
-          setTimeout(() => navigation.navigate('Home Prueba'), 50); // Navega después
+          setTimeout(() => navigation.navigate('Home'), 50); // Navega después
         }}
       >
         <Text style={styles.drawerText}>Página de Inicio</Text>
