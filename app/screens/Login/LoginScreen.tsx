@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
+import axios from 'axios';
 import { API_ENDPOINT } from '@env'; // Importamos la variable de entorno
 
 export default function LoginScreen({ navigation }: { navigation: any }) {
-  const [usuario, setUsuario] = useState(''); // El nombre de usuario
-  const [contrasenia, setContrasenia] = useState(''); // La contraseña
+  const [usuario, setUsuario] = useState('');
+  const [contrasenia, setContrasenia] = useState('');
 
-  // Función para manejar el inicio de sesión
   const handleLogin = async () => {
     if (!usuario || !contrasenia) {
       Alert.alert('Error', 'Por favor completa todos los campos');
@@ -14,26 +14,19 @@ export default function LoginScreen({ navigation }: { navigation: any }) {
     }
 
     try {
-      // Llamada a la API de login
-      const response = await fetch(`${API_ENDPOINT}/usuarios/login`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ usuario, contrasenia }),
+      // Realizar la solicitud de login con Axios
+      const response = await axios.post(`${API_ENDPOINT}/usuarios/login`, {
+        usuario,
+        contrasenia,
       });
 
-      const result = await response.json();
+      const result = response.data;
 
-      if (response.ok) {
-        // Si el login fue exitoso
+      // Redirigir al Drawer principal si el login es exitoso
+      if (response.status === 200) {
         Alert.alert('¡Éxito!', 'Inicio de sesión exitoso');
-        console.log(result);
-
-        // Guarda el token o redirige a otra pantalla
-        navigation.navigate('Home', { user: result.usuario }); // Cambia "Home" por la pantalla que corresponda
+        navigation.navigate('MainApp'); // Redirige al Drawer principal
       } else {
-        // Si hubo un error, muestra el mensaje del backend
         Alert.alert('Error', result.message || 'Credenciales inválidas');
       }
     } catch (error) {
