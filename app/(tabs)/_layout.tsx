@@ -3,6 +3,7 @@ import { createDrawerNavigator, DrawerContentComponentProps } from '@react-navig
 import { Text, StyleSheet, TouchableOpacity, View } from 'react-native';
 import HomeScreen from '../screens/Home/HomeScreen';
 import ExploreScreen from '../screens/Explore/ExploreScreen';
+import LoginScreen from '../screens/Login/LoginScreen';
 
 const Drawer = createDrawerNavigator();
 
@@ -38,6 +39,7 @@ export default function Layout() {
       initialRouteName="Home"
       drawerContent={(props) => <CustomDrawerContent {...props} />}
     >
+      <Drawer.Screen name="Login" component={LoginScreen} />
       <Drawer.Screen name="Home" component={HomeScreen} />
       <Drawer.Screen name="Explore" component={ExploreScreen} />
     </Drawer.Navigator>
