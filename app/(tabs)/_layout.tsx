@@ -6,6 +6,7 @@ import HomeScreen from '../screens/Home/HomeScreen';
 import ExploreScreen from '../screens/Explore/ExploreScreen';
 import LoginScreen from '../screens/Login/LoginScreen';
 import UserProfile from '../screens/UserProfile/UserProfile';
+import AppInitializer from '../../services/AppInitializer'; // Importa el AppInitializer
 
 // Crear instancias de navegadores
 const Drawer = createDrawerNavigator();
@@ -60,12 +61,14 @@ function DrawerLayout() {
   );
 }
 
-// Stack Navigator para manejar Login y el Drawer
+// Stack Navigator para manejar Login, AppInitializer y el Drawer
 export default function Layout() {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
-      {/* Pantalla de Login en pantalla completa */}
+      {/* Pantalla de Login */}
       <Stack.Screen name="Login" component={LoginScreen} />
+      {/* Pantalla inicial para verificación */}
+      <Stack.Screen name="AppInitializer" component={AppInitializer} />
       {/* Drawer principal con las pantallas principales */}
       <Stack.Screen name="MainApp" component={DrawerLayout} />
     </Stack.Navigator>

@@ -18,6 +18,16 @@ const UserProfile = () => {
 
         if (loggedUser) {
           setUserData(loggedUser); // Guarda los datos del usuario
+          
+          // Verificar si la contraseña no ha sido cambiada
+          if (loggedUser.changedPassword === 0) {
+            Alert.alert(
+              '¡Advertencia!',
+              'Debes cambiar tu contraseña por primera vez para continuar.',
+              [{ text: 'Entendido', onPress: () => console.log('Alerta cerrada') }],
+              { cancelable: false }
+            );
+          }
         } else {
           setError('Usuario no encontrado.');
         }
