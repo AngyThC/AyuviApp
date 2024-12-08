@@ -52,3 +52,5 @@ Join our community of developers creating universal apps.
 
 Instalar tambien:
 npm install react-native-dotenv
+npm install axios
+npm install @react-native-async-storage/async-storage

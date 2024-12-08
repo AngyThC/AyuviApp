@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 import axios from 'axios';
 import { API_ENDPOINT } from '@env'; // Importamos la variable de entorno
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function LoginScreen({ navigation }: { navigation: any }) {
   const [usuario, setUsuario] = useState('');
@@ -14,25 +15,21 @@ export default function LoginScreen({ navigation }: { navigation: any }) {
     }
 
     try {
-      // Realizar la solicitud de login con Axios
-      const response = await axios.post(`${API_ENDPOINT}/usuarios/login`, {
-        usuario,
-        contrasenia,
-      });
+    const response = await axios.post(`${API_ENDPOINT}/usuarios/login`, {
+      usuario: usuario,
+      contrasenia: contrasenia,
+    });
 
-      const result = response.data;
-
-      // Redirigir al Drawer principal si el login es exitoso
-      if (response.status === 200) {
-        Alert.alert('¡Éxito!', 'Inicio de sesión exitoso');
-        navigation.navigate('MainApp'); // Redirige al Drawer principal
-      } else {
-        Alert.alert('Error', result.message || 'Credenciales inválidas');
-      }
-    } catch (error) {
-      console.error('Error al iniciar sesión:', error);
-      Alert.alert('Error', 'Hubo un problema con la conexión al servidor');
+    if (response.status === 200) {
+      const { usuario, token } = response.data;
+      await AsyncStorage.setItem('userId', String(usuario.idUsuario)); // Guarda el userId
+      await AsyncStorage.setItem('token', token); // Guarda el token
+      navigation.navigate('MainApp'); // Navega a la app principal
     }
+  } catch (error) {
+    console.error('Error al iniciar sesión:', error);
+    Alert.alert('Error', 'Credenciales incorrectas.');
+  }
   };
 
   return (

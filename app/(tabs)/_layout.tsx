@@ -5,6 +5,7 @@ import { Text, StyleSheet, TouchableOpacity, View } from 'react-native';
 import HomeScreen from '../screens/Home/HomeScreen';
 import ExploreScreen from '../screens/Explore/ExploreScreen';
 import LoginScreen from '../screens/Login/LoginScreen';
+import UserProfile from '../screens/UserProfile/UserProfile';
 
 // Crear instancias de navegadores
 const Drawer = createDrawerNavigator();
@@ -32,6 +33,15 @@ function CustomDrawerContent({ navigation }: DrawerContentComponentProps) {
       >
         <Text style={styles.drawerText}>Explorar</Text>
       </TouchableOpacity>
+      <TouchableOpacity
+        style={styles.drawerItem}
+        onPress={() => {
+          navigation.closeDrawer();
+          setTimeout(() => navigation.navigate('MyProfile'), 50);
+        }}
+      >
+        <Text style={styles.drawerText}>Mi perfil</Text>
+      </TouchableOpacity>
     </View>
   );
 }
@@ -45,6 +55,7 @@ function DrawerLayout() {
     >
       <Drawer.Screen name="Home" component={HomeScreen} />
       <Drawer.Screen name="Explore" component={ExploreScreen} />
+      <Drawer.Screen name="MyProfile" component={UserProfile} />
     </Drawer.Navigator>
   );
 }
